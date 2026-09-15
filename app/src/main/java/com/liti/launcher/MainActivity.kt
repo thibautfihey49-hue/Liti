@@ -9,84 +9,70 @@ import androidx.appcompat.app.AppCompatActivity
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        
         val root = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
             setBackgroundColor(Color.parseColor("#F7F7F8"))
             setPadding(40,80,40,40)
         }
-
         val title = TextView(this).apply {
             text = "LITI ULTRA\nLauncher OK ✅"
-            textSize = 28f
+            textSize = 26f
             setTextColor(Color.parseColor("#0F172A"))
-            setPadding(0,0,0,30)
         }
-
         val status = TextView(this).apply {
-            text = "Version SAFE - 0 XML - 12MB RAM\nSi tu vois ça, le launcher ne crash plus"
-            textSize = 14f
-            setTextColor(Color.parseColor("#64748B"))
+            text = "SAFE BUILD v5 - 0 XML - No RecyclerView"
+            textSize = 13f
+            setTextColor(Color.GRAY)
+            setPadding(0,20,0,30)
         }
-
-        fun makeBtn(text: String, color: String, onClick: () -> Unit): LinearLayout {
+        fun makeBtn(label: String, col: String, action: ()->Unit): LinearLayout {
             return LinearLayout(this).apply {
                 orientation = LinearLayout.VERTICAL
-                setBackgroundColor(Color.parseColor(color))
+                setBackgroundColor(Color.parseColor(col))
                 setPadding(30,30,30,30)
-                val tv = TextView(this@MainActivity).apply {
-                    this.text = text
-                    textSize = 16f
+                addView(TextView(this@MainActivity).apply{
+                    text = label
+                    textSize = 15f
                     setTextColor(Color.BLACK)
                     gravity = Gravity.CENTER
-                }
-                addView(tv)
-                setOnClickListener { onClick() }
-                val p = LinearLayout.LayoutParams(0, 220, 1f)
+                })
+                setOnClickListener { action() }
+                val p = LinearLayout.LayoutParams(0, 200, 1f)
                 p.setMargins(10,10,10,10)
                 layoutParams = p
             }
         }
-
         val row1 = LinearLayout(this).apply {
             orientation = LinearLayout.HORIZONTAL
-            val b1 = makeBtn("🧹\nCLEAN RAM\n+850MB") { 
-                Toast.makeText(this@MainActivity,"✓ RAM nettoyée",Toast.LENGTH_SHORT).show()
-            }
-            val b2 = makeBtn("⚡\nBOOST NET\n14ms") {
-                Toast.makeText(this@MainActivity,"⚡ NET BOOST ON",Toast.LENGTH_SHORT).show()
-            }
-            addView(b1); addView(b2)
+            addView(makeBtn("🧹 CLEAN RAM", "#E0F2FE") {
+                Toast.makeText(this@MainActivity,"✓ +850 MB",Toast.LENGTH_SHORT).show()
+            })
+            addView(makeBtn("⚡ BOOST NET", "#EDE9FE") {
+                Toast.makeText(this@MainActivity,"⚡ BOOST 14ms",Toast.LENGTH_SHORT).show()
+            })
         }
-
         val row2 = LinearLayout(this).apply {
             orientation = LinearLayout.HORIZONTAL
-            val b1 = makeBtn("🎮\nGAME TURBO") {
+            addView(makeBtn("🎮 GAME TURBO", "#FEF3C7") {
                 startActivity(Intent(this@MainActivity, GameTurboActivity::class.java))
-            }
-            val b2 = makeBtn("🌙\nDEEP SLEEP\n+3.2h") {
-                Toast.makeText(this@MainActivity,"🌙 Deep sleep ON",Toast.LENGTH_SHORT).show()
-            }
-            addView(b1); addView(b2)
+            })
+            addView(makeBtn("🌙 DEEP SLEEP", "#DCFCE7") {
+                Toast.makeText(this@MainActivity,"🌙 +3.2h",Toast.LENGTH_SHORT).show()
+            })
         }
-
-        val installBtn = Button(this).apply {
-            text = "DEFINIR COMME LAUNCHER PAR DEFAUT"
+        val btnLauncher = Button(this).apply {
+            text = "DEFINIR COMME LAUNCHER"
             setOnClickListener {
-                val intent = Intent(Intent.ACTION_MAIN).apply {
-                    addCategory(Intent.CATEGORY_HOME)
-                    flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                }
-                startActivity(Intent.createChooser(intent, "Choisir Liti Ultra"))
+                val i = Intent(Intent.ACTION_MAIN)
+                i.addCategory(Intent.CATEGORY_HOME)
+                startActivity(Intent.createChooser(i,"Choisir Liti"))
             }
         }
-
         root.addView(title)
         root.addView(status)
         root.addView(row1)
         root.addView(row2)
-        root.addView(installBtn)
-
+        root.addView(btnLauncher)
         setContentView(root)
     }
 }

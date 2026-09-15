@@ -1,0 +1,4 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical" android:padding="24dp" android:background="#F7F7F8">
+    <TextView android:text="GAME TURBO" android:textSize="28sp" android:textStyle="bold"/>
+    <TextView android:text="Balanced / Performance / Beast" android:textColor="#64748B"/>
+</LinearLayout>

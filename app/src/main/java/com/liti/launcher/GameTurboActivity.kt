@@ -1,18 +1,22 @@
 package com.liti.launcher
+import android.graphics.Color
 import android.os.Bundle
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import com.liti.launcher.databinding.ActivityGameBinding
 
 class GameTurboActivity: AppCompatActivity(){
-    private lateinit var binding: ActivityGameBinding
     override fun onCreate(b: Bundle?){
         super.onCreate(b)
-        binding = ActivityGameBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        binding.btnBack.setOnClickListener { finish() }
-        binding.cardBalanced.setOnClickListener { Toast.makeText(this,"Balanced: 60Hz économie",Toast.LENGTH_SHORT).show() }
-        binding.cardPerf.setOnClickListener { Toast.makeText(this,"Performance: 90Hz + Boost Net ON",Toast.LENGTH_SHORT).show() }
-        binding.cardBeast.setOnClickListener { Toast.makeText(this,"BEAST MODE: Max CPU/GPU + Ping 0",Toast.LENGTH_SHORT).show() }
+        val root = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            setBackgroundColor(Color.parseColor("#F7F7F8"))
+            setPadding(40,80,40,40)
+        }
+        root.addView(TextView(this).apply{ text="GAME TURBO"; textSize=28f; setTextColor(Color.BLACK) })
+        root.addView(Button(this).apply{ text="Balanced - 60Hz"; setOnClickListener{ finish() } })
+        root.addView(Button(this).apply{ text="Performance - 90Hz"; setOnClickListener{ finish() } })
+        root.addView(Button(this).apply{ text="BEAST MODE"; setOnClickListener{ finish() } })
+        root.addView(Button(this).apply{ text="← Retour"; setOnClickListener{ finish() } })
+        setContentView(root)
     }
 }
